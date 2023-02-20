@@ -1,0 +1,21 @@
+# To make your own custom iosevka build: https://typeof.net/Iosevka/customizer
+[buildPlans.akoni]
+family = "Akoni"
+spacing = "term"
+serifs = "sans"
+no-cv-ss = true
+export-glyph-names = true
+
+  [buildPlans.akoni.variants]
+  inherits = "ss09"
+
+    [buildPlans.akoni.variants.design]
+    asterisk = "hex-low"
+    pilcrow = "high"
+    brace = "straight"
+    dollar = "open"
+    lig-neq = "more-slanted"
+    lig-equal-chain = "without-notch"
+    lig-hyphen-chain = "without-notch"
+    lig-double-arrow-bar = "without-notch"
+    lig-single-arrow-bar = "without-notch"
