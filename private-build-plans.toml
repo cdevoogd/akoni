@@ -10,6 +10,7 @@ export-glyph-names = true
   inherits = "ss09"
 
     [buildPlans.akoni.variants.design]
+    one = "base"
     asterisk = "hex-low"
     pilcrow = "high"
     brace = "straight"
