@@ -19,3 +19,8 @@ export-glyph-names = true
     lig-hyphen-chain = "without-notch"
     lig-double-arrow-bar = "without-notch"
     lig-single-arrow-bar = "without-notch"
+
+[buildPlans.akoni.widths.normal]
+shape = 600
+menu = 5
+css = "normal"
