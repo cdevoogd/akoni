@@ -39,15 +39,15 @@ print_usage() {
     echo "  $0 [OPTIONS]"
     echo
     echo "OPTIONS:"
-    echo " -h, --help           Print out this help message and exit."
-    echo " -j, --jobs num       Set the number of concurrent jobs used to build the base version of"
-    echo "                      the font. By default, this will be the number of threads available"
-    echo "                      on your CPU ($(nproc)) which will push it to its peak."
-    echo " --base-font-only     Only generate the base version font."
-    echo " --patched-font-only  Only generated the patched version of the font. The base version"
-    echo "                      must have been generated previously."
-    echo " --archive-only       Only regenerated the archive/release files. The base and patched "
-    echo "                      versions of the font must have been generated previously."
+    echo " -h, --help       Print out this help message and exit."
+    echo " -j, --jobs num   Set the number of concurrent jobs used to build the base version of the"
+    echo "                  font. By default, this will be the number of threads available on your"
+    echo "                  CPU ($(nproc)) which will push it to its peak."
+    echo " --base-only      Only generate the base version font."
+    echo " --patch-only     Only generated the patched version of the font. The base version must"
+    echo "                  have been generated previously."
+    echo " --archive-only   Only regenerated the archive/release files. The base and patched"
+    echo "                  versions of the font must have been generated previously."
 }
 
 handle_missing_arg() {
@@ -73,11 +73,11 @@ parse_arguments() {
             fi
             CONCURRENT_JOBS=$1
             ;;
-        --base-font-only)
+        --base-only)
             PATCH_FONT="false"
             CREATE_PATCH_ARCHIVE="false"
             ;;
-        --patched-font-only)
+        --patch-only)
             BUILD_BASE_FONT="false"
             CREATE_BASE_ARCHIVE="false"
             ;;
