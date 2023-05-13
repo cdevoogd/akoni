@@ -14,7 +14,6 @@ HINTED_TTF_DIR="$BASE_OUTPUT_DIR/akoni/ttf"
 RELEASE_DIR="$PROJECT_ROOT/dist"
 BASE_RELEASE_ZIP="$RELEASE_DIR/akoni-$FONT_VERSION.zip"
 PATCH_RELEASE_ZIP="$RELEASE_DIR/akoni-nerd-font-$FONT_VERSION.zip"
-PATCH_WINDOWS_RELEASE_ZIP="$RELEASE_DIR/akoni-nerd-font-windows-compatible-$FONT_VERSION.zip"
 
 CONCURRENT_JOBS="$(nproc)"
 BUILD_BASE_FONT="true"
@@ -130,8 +129,6 @@ prepare_build() {
     if [[ "$CREATE_PATCH_ARCHIVE" == "true" ]]; then
         log "Cleaning up existing patched font releases ($PATCH_RELEASE_ZIP)"
         if [[ -f "$PATCH_RELEASE_ZIP" ]]; then rm "$PATCH_RELEASE_ZIP"; fi
-        log "Cleaning up existing patched font releases for Windows ($PATCH_WINDOWS_RELEASE_ZIP)"
-        if [[ -f "$PATCH_WINDOWS_RELEASE_ZIP" ]]; then rm "$PATCH_WINDOWS_RELEASE_ZIP"; fi
     fi
 
     log "Ensuring the release directory exists ($RELEASE_DIR)"
@@ -159,7 +156,7 @@ patch_font() {
         --rm \
         --volume "$HINTED_TTF_DIR":/in \
         --volume "$PATCHED_OUTPUT_DIR":/out \
-        nerdfonts/patcher --adjust-line-height --also-windows --careful --complete --makegroups
+        nerdfonts/patcher --adjust-line-height --careful --complete --makegroups 4
 }
 
 count_files() {
@@ -174,21 +171,15 @@ check_patched_file_count() {
     local output_count
     input_count=$(count_files "$HINTED_TTF_DIR")
     output_count=$(count_files "$PATCHED_OUTPUT_DIR")
-    expected_output_count=$(( 2 * input_count ))
 
-    # Each input file should have a normal version and a windows compatible version
-    if (( output_count != expected_output_count )); then
-        logerr "Expected $expected_output_count patched files from $input_count input files but have $output_count"
+    if (( input_count != output_count )); then
+        logerr "Expected $input_count patched files but have $output_count"
         exit 1
     fi
 }
 
 get_files() {
     find "$1" -maxdepth 1
-}
-
-get_patched_files() {
-    get_files "$PATCHED_OUTPUT_DIR"
 }
 
 to_zip() {
@@ -202,13 +193,8 @@ create_base_font_release() {
 }
 
 create_patched_font_release() {
-    # Find doesnt support lookarounds in regular expressions, so I'm using grep to filter for
-    # the Windows files instead.
     log "Creating zip archive for the patched font: $PATCH_RELEASE_ZIP"
-    get_patched_files | grep --invert-match 'Windows' | to_zip "$PATCH_RELEASE_ZIP"
-
-    log "Creating zip archive for the Windows-compatible patched font ($PATCH_WINDOWS_RELEASE_ZIP)"
-    get_patched_files | grep 'Windows' | to_zip "$PATCH_WINDOWS_RELEASE_ZIP"
+    get_files "$PATCHED_OUTPUT_DIR" | to_zip "$PATCH_RELEASE_ZIP"
 }
 
 main() {
