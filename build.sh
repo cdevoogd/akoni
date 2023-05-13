@@ -2,7 +2,7 @@
 set -euo pipefail
 
 FONT_VERSION=1.1.0
-IOSEVKA_VERSION="19.0.1"
+IOSEVKA_VERSION="22.1.2"
 
 PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CUSTOM_BUILD_PLANS="$PROJECT_ROOT/private-build-plans.toml"
