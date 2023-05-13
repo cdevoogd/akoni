@@ -148,7 +148,7 @@ build_font() {
         --env FONT_VERSION="$IOSEVKA_VERSION" \
         --volume "$CUSTOM_BUILD_PLANS":/build/private-build-plans.toml \
         --volume "$BASE_OUTPUT_DIR":/build/dist \
-        avivace/iosevka-build --jCmd="$CONCURRENT_JOBS" ttf::akoni
+        avivace/iosevka-build ttf::akoni --jCmd="$CONCURRENT_JOBS"
     echo ""
 }
 
