@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-FONT_VERSION=1.2.0
+FONT_VERSION=1.2.1
 IOSEVKA_VERSION="22.1.2"
 
 PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
